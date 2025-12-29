@@ -1,35 +1,36 @@
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
-import pluginPlaywright from 'eslint-plugin-playwright'
-import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import antfu from '@antfu/eslint-config'
 
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
-
-export default defineConfigWithVueTs(
-  {
-    name: 'app/files-to-lint',
-    files: ['**/*.{vue,ts,mts,tsx}'],
+export default antfu({
+  ignores: ['node_modules', 'dist', 'README.md'],
+  formatters: {
+    css: true,
+    html: true,
+    markdown: true,
+    prettierOptions: {
+      semi: true, // 确保添加分号
+      singleQuote: true, // 使用单引号
+      trailingComma: 'es5', // 在对象、数组等末尾添加逗号
+    },
   },
-
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
-
-  ...pluginVue.configs['flat/essential'],
-  vueTsConfigs.recommended,
-
-  {
-    ...pluginPlaywright.configs['flat/recommended'],
-    files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+  vue: true,
+  rules: {
+    'no-console': 'off',
+    'ts/no-unused-expressions': 'off',
+    'vue/custom-event-name-casing': 'off',
+    'node/prefer-global/process': 'off',
+    // 确保与 Prettier 的分号设置一致
+    '@stylistic/semi': ['warn', 'never'],
+    'style/eol-last': 'off',
+    // 设置忽略规则 _xx 忽略声明未使用的警告
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrors: 'all',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
   },
-
-  {
-    ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
-  },
-
-  skipFormatting,
-)
+})
