@@ -4,7 +4,6 @@ import type { ResponseResultData, UserCustomConfig } from './types'
 import { logger } from '@shuke~/logger'
 import { getSystemErrorMessage, HttpRequest, RequestMethodsEnum } from '@shuke~/request'
 import axios from 'axios'
-import { showMessageError } from '../ui'
 
 const cancelMap = new Map<string, Canceler>()
 

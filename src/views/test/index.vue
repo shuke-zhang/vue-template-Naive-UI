@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { NButton } from 'naive-ui'
-import { showMessageSuccess } from '@/utils'
-
 // window.$message = useMessage()
 function test() {
   showMessageSuccess('哈哈哈哈')
