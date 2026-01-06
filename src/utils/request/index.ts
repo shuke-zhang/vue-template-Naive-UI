@@ -4,6 +4,7 @@ import type { ResponseResultData, UserCustomConfig } from './types'
 import { logger } from '@shuke~/logger'
 import { getSystemErrorMessage, HttpRequest, RequestMethodsEnum } from '@shuke~/request'
 import axios from 'axios'
+import { showMessageError } from '../ui'
 
 const cancelMap = new Map<string, Canceler>()
 
@@ -74,9 +75,9 @@ const request = new HttpRequest<UserCustomConfig>(
         // handleError(msg)
         // 只做提示，不做其他操作
         if (!config.enable401AuthGuard) {
-          // return showMessageError((responseData.data as string) || msg)
+          return showMessageError((responseData.data as string) || msg)
         }
-        // showMessageError((responseData.data as string) || msg)
+        showMessageError((responseData.data as string) || msg)
         // 返回登录页
         return
       }
@@ -144,7 +145,7 @@ export function removeAllPending() {
 function handleError(msg: string, showErrorMsg = true) {
   if (showErrorMsg) {
     console.log('调用了handleError')
-    // showMessageError(msg)
+    showMessageError(msg)
     console.log('调用了handleError2')
 
     throw new Error(msg)

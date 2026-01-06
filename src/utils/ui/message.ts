@@ -1,18 +1,17 @@
-import type { MessageOptions, MessageOptionsWithType } from 'element-plus'
+import type { MessageOptions, MessageType } from 'naive-ui'
+import { createDiscreteApi } from 'naive-ui'
 
-type MessageOptionsType = Required<MessageOptions>['type']
 type MessageOptionsWithoutTypeAndMessage = Omit<MessageOptions, 'type' | 'message'>
-
-export function createBaseMessage(type: MessageOptionsType) {
+const { message: _message } = createDiscreteApi(['message'])
+export function createBaseMessage(type: MessageType) {
   const defaultOptions: MessageOptionsWithoutTypeAndMessage = {
     duration: 2000,
-    showClose: true,
+    closable: true,
   }
-  return (message: string, options: MessageOptionsWithType = {}) => {
+  return (message: string, options: MessageOptionsWithoutTypeAndMessage = {}) => {
     return new Promise((resolve) => {
-      ElMessage({
+      _message.create(message, {
         type,
-        message,
         ...defaultOptions,
         ...options,
         onClose: () => {

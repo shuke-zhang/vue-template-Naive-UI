@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const s = ref(1)
+import test from './views/test/index.vue'
 </script>
 
 <template>
-  <h1>You did it!-{{ s }}</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <test />
 </template>
 
 <style scoped>
